@@ -3,10 +3,10 @@
 Starting the Tutorial Series - Hacking With Swift
 
 Continue here:
-https://www.hackingwithswift.com/read/9/4/back-to-the-main-thread-dispatch_get_main_queue
+https://www.hackingwithswift.com/read/10/1/setting-up
 
-Project 9
+Project 10
 
-Happy Thanksgiving!
+
 
 
