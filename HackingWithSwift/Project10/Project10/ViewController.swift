@@ -12,6 +12,10 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
 
     @IBOutlet weak var collectionView: UICollectionView!
 
+    // create an array of our people objects
+    var people = [Person]()
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -65,6 +69,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             jpegData.writeToFile(imagePath, atomically: true)
         }
         
+        let person = Person(name: "Unknown", image: imageName)
+        people.append(person)
+        collectionView.reloadData()
         dismissViewControllerAnimated(true, completion: nil)
     }
     
