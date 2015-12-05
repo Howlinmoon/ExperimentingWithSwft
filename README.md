@@ -3,9 +3,9 @@
 Starting the Tutorial Series - Hacking With Swift
 
 Continue here:
-https://www.hackingwithswift.com/read/10/6/connecting-up-the-people
+https://www.hackingwithswift.com/read/11/1/setting-up
 
-Project 10
+Starting Project 11
 
 
 
