@@ -11,31 +11,24 @@ import SpriteKit
 class GameScene: SKScene {
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
-        let myLabel = SKLabelNode(fontNamed:"Chalkduster")
-        myLabel.text = "Hello, World!";
-        myLabel.fontSize = 45;
-        myLabel.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame));
-        
-        self.addChild(myLabel)
+        let background = SKSpriteNode(imageNamed: "background.jpg")
+        background.position = CGPoint(x: 512, y: 384)
+        background.blendMode = .Replace
+        background.zPosition = -1
+        addChild(background)
+        // set the frame of the screen as the "ground" to keep objects from passing through
+        physicsBody = SKPhysicsBody(edgeLoopFromRect: frame)
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
        /* Called when a touch begins */
-        
-        for touch in touches {
+        if let touch = touches.first {
             let location = touch.locationInNode(self)
-            
-            let sprite = SKSpriteNode(imageNamed:"Spaceship")
-            
-            sprite.xScale = 0.5
-            sprite.yScale = 0.5
-            sprite.position = location
-            
-            let action = SKAction.rotateByAngle(CGFloat(M_PI), duration:1)
-            
-            sprite.runAction(SKAction.repeatActionForever(action))
-            
-            self.addChild(sprite)
+            let box = SKSpriteNode(color: UIColor.redColor(), size: CGSize(width: 64, height: 64))
+            // Give the new boxes physics property - so they respond to gravity
+            box.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 64, height: 64))
+            box.position = location
+            addChild(box)
         }
     }
    
