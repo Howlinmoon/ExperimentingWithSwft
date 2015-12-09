@@ -3,7 +3,7 @@
 Starting the Tutorial Series - Hacking With Swift
 
 Continue here:
-https://www.hackingwithswift.com/read/11/4/spinning-slots-skaction
+https://www.hackingwithswift.com/read/11/5/collision-detection-skphysicscontactdelegate
 
 Starting Project 11
 

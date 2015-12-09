@@ -19,6 +19,13 @@ class GameScene: SKScene {
         // set the frame of the screen as the "ground" to keep objects from passing through
         physicsBody = SKPhysicsBody(edgeLoopFromRect: frame)
         
+        
+        // Target slots - good and bad
+        makeSlotAt(CGPoint(x: 128, y: 0), isGood: true)
+        makeSlotAt(CGPoint(x: 384, y: 0), isGood: false)
+        makeSlotAt(CGPoint(x: 640, y: 0), isGood: true)
+        makeSlotAt(CGPoint(x: 896, y:0), isGood: false)
+        
         // Add some bouncers to hit with the balls
         makeBouncerAt(CGPoint(x: 0, y: 0))
         makeBouncerAt(CGPoint(x: 256, y: 0))
@@ -37,6 +44,28 @@ class GameScene: SKScene {
 
     }
     
+    func makeSlotAt(position: CGPoint, isGood: Bool) {
+        var slotBase: SKSpriteNode
+        var slotGlow: SKSpriteNode
+        
+        if isGood {
+            slotBase = SKSpriteNode(imageNamed: "slotBaseGood")
+            slotGlow = SKSpriteNode(imageNamed: "slotGlowGood")
+        } else {
+            slotBase = SKSpriteNode(imageNamed: "slotBaseBad")
+            slotGlow = SKSpriteNode(imageNamed: "slotGlowBad")
+        }
+        
+        slotBase.position = position
+        slotGlow.position = position
+        addChild(slotBase)
+        addChild(slotGlow)
+        
+        // Spin the glowing slots
+        let spin = SKAction.rotateByAngle(CGFloat(M_PI_2), duration: 10)
+        let spinForever = SKAction.repeatActionForever(spin)
+        slotGlow.runAction(spinForever)
+    }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
        /* Called when a touch begins */
