@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class GameScene: SKScene {
+class GameScene: SKScene, SKPhysicsContactDelegate  {
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
         let background = SKSpriteNode(imageNamed: "background.jpg")
@@ -19,6 +19,8 @@ class GameScene: SKScene {
         // set the frame of the screen as the "ground" to keep objects from passing through
         physicsBody = SKPhysicsBody(edgeLoopFromRect: frame)
         
+        // assign ourself as the contact delegate
+        physicsWorld.contactDelegate = self
         
         // Target slots - good and bad
         makeSlotAt(CGPoint(x: 128, y: 0), isGood: true)
@@ -39,6 +41,7 @@ class GameScene: SKScene {
         let bouncer = SKSpriteNode(imageNamed: "bouncer")
         bouncer.position = position
         bouncer.physicsBody = SKPhysicsBody(circleOfRadius: bouncer.size.width / 2.0)
+        bouncer.physicsBody!.contactTestBitMask = bouncer.physicsBody!.collisionBitMask
         bouncer.physicsBody!.dynamic = false
         addChild(bouncer)
 
@@ -51,13 +54,17 @@ class GameScene: SKScene {
         if isGood {
             slotBase = SKSpriteNode(imageNamed: "slotBaseGood")
             slotGlow = SKSpriteNode(imageNamed: "slotGlowGood")
+            slotBase.name = "good"
         } else {
             slotBase = SKSpriteNode(imageNamed: "slotBaseBad")
             slotGlow = SKSpriteNode(imageNamed: "slotGlowBad")
+            slotBase.name = "bad"
         }
         
         slotBase.position = position
         slotGlow.position = position
+        slotBase.physicsBody = SKPhysicsBody(rectangleOfSize: slotBase.size)
+        slotBase.physicsBody!.dynamic = false;
         addChild(slotBase)
         addChild(slotGlow)
         
@@ -73,13 +80,38 @@ class GameScene: SKScene {
             let location = touch.locationInNode(self)
             let ball = SKSpriteNode(imageNamed: "ballRed")
             ball.physicsBody = SKPhysicsBody(circleOfRadius: ball.size.width / 2.0)
+            ball.physicsBody!.contactTestBitMask = ball.physicsBody!.collisionBitMask
             ball.physicsBody!.restitution = 0.4
             ball.position = location
+            ball.name = "ball"
             addChild(ball)
         }
     }
    
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
+    }
+    
+    // Ball hit something
+    func collisionBetweenBall(ball: SKNode, object: SKNode) {
+        if object.name == "good" {
+            destroyBall(ball)
+        } else if object.name == "bad" {
+            destroyBall(ball)
+        }
+    }
+    
+    func destroyBall(ball: SKNode) {
+        ball.removeFromParent()
+    }
+    
+    
+    // General contact handler
+    func didBeginContact(contact: SKPhysicsContact) {
+        if contact.bodyA.node!.name == "ball" {
+            collisionBetweenBall(contact.bodyA.node!, object: contact.bodyB.node!)
+        } else if contact.bodyB.node!.name == "ball" {
+            collisionBetweenBall(contact.bodyB.node!, object: contact.bodyA.node!)
+        }
     }
 }
