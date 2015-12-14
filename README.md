@@ -3,9 +3,9 @@
 Starting the Tutorial Series - Hacking With Swift
 
 Continue here:
-https://www.hackingwithswift.com/read/12/3/fixing-project-10-nscoding
+https://www.hackingwithswift.com/read/13/1/setting-up
 
-Starting Project 12
+Starting Project 13
 
 
 
