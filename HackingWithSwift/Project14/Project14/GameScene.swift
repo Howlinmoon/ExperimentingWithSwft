@@ -18,6 +18,7 @@ class GameScene: SKScene {
         }
     }
     
+    var popupTime = 0.85
     
     override func didMoveToView(view: SKView) {
         let background = SKSpriteNode(imageNamed: "whackBackground")
