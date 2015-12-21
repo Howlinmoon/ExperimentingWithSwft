@@ -7,6 +7,7 @@
 //
 
 import SpriteKit
+import GameKit
 
 class GameScene: SKScene {
     var slots = [WhackSlot]()
@@ -38,6 +39,10 @@ class GameScene: SKScene {
         for i in 0 ..< 4 { createSlotAt(CGPoint(x: 180 + (i * 170), y: 320)) }
         for i in 0 ..< 5 { createSlotAt(CGPoint(x: 100 + (i * 170), y: 230)) }
         for i in 0 ..< 4 { createSlotAt(CGPoint(x: 180 + (i * 170), y: 140)) }
+        
+        RunAfterDelay(1) { [unowned self] in
+            self.createEnemy()
+        }
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -58,6 +63,23 @@ class GameScene: SKScene {
         slots.append(slot)
     }
     
-    
+    func createEnemy() {
+        popupTime *= 0.991
+        
+        slots = GKRandomSource.sharedRandom().arrayByShufflingObjectsInArray(slots) as! [WhackSlot]
+        slots[0].show(hideTime: popupTime)
+        
+        if RandomInt(min: 0, max: 12) > 4 { slots[1].show(hideTime: popupTime) }
+        if RandomInt(min: 0, max: 12) > 8 {    slots[2].show(hideTime: popupTime) }
+        if RandomInt(min: 0, max: 12) > 10 { slots[3].show(hideTime: popupTime) }
+        if RandomInt(min: 0, max: 12) > 11 { slots[4].show(hideTime: popupTime)    }
+        
+        let minDelay = popupTime / 2.0
+        let maxDelay = popupTime * 2
+        
+        RunAfterDelay(RandomDouble(min: minDelay, max: maxDelay)) { [unowned self] in
+            self.createEnemy()
+        }
+    }
     
 }
