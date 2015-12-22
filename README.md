@@ -3,9 +3,9 @@
 Starting the Tutorial Series - Hacking With Swift
 
 Continue here:
-https://www.hackingwithswift.com/read/14/4/whack-to-win-skaction-sequences
+https://www.hackingwithswift.com/read/15/1/setting-up
 
-Starting Project 14
+Starting Project 15
 
 
 
